@@ -13,7 +13,10 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: "https://ai-interview-agent-pi.vercel.app/",
+    origin:  origin: [
+    "http://localhost:5173",
+    "https://ai-interview-agent-pi.vercel.app"
+  ],
     credentials: true,
   }),
 );
