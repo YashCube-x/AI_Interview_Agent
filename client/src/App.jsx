@@ -9,7 +9,7 @@ import { setUserData } from "./redux/userSlice";
 import InterviewReports from "./Pages/InterviewReports";
 import InterviewHistory from "./Pages/InterviewHistory";
 import Pricing from "./Pages/Pricing";
-export const ServerURL = "http://localhost:8000";
+export const ServerURL = "https://ai-interview-agent-2.onrender.com";
 const App = () => {
   const dispatch = useDispatch();
 
