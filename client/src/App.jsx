@@ -7,6 +7,8 @@ import Interview from "./Pages/InterviewPage";
 import { useDispatch } from "react-redux";
 import { setUserData } from "./redux/userSlice";
 import InterviewReports from "./Pages/InterviewReports";
+import InterviewHistory from "./Pages/InterviewHistory";
+import Pricing from "./Pages/Pricing";
 export const ServerURL = "http://localhost:8000";
 const App = () => {
   const dispatch = useDispatch();
@@ -33,7 +35,8 @@ const App = () => {
       <Route path="/interview" element={<Interview />} />
       <Route path="/history" element={<InterviewHistory />} />
       <Route path="/pricing" element={<Pricing />} />
-      <Route path="/report" element={<InterviewReports />} />
+      <Route path="/report/:id" element={<InterviewReports />} />
+      <Route path="*" element={<Home />} />
     </Routes>
   );
 };

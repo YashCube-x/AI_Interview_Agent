@@ -198,6 +198,7 @@ const Step2Interview = ({ interviewData, onFinish }) => {
     if (isIntroPhase) return;
     if (!currentQuestion) return;
     if (isSubmitting) return;
+    if (isAIPlaying) return;
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -210,7 +211,7 @@ const Step2Interview = ({ interviewData, onFinish }) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isIntroPhase, currentIndex, isSubmitting]);
+  }, [isIntroPhase, currentIndex, isSubmitting, isAIPlaying]);
 
   useEffect(() => {
     if (!("webkitSpeechRecognition" in window)) return;
@@ -283,7 +284,7 @@ const Step2Interview = ({ interviewData, onFinish }) => {
 
     try {
       const result = await axios.post(
-        ServerURL + "/api/interview/finish",
+        ServerURL + "/api/interview/finish-interview",
         { interviewId },
         { withCredentials: true },
       );

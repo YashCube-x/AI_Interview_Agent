@@ -367,17 +367,13 @@ export const finishInterview = async (req, res) => {
 
 export const getMyInterviews = async (req, res) => {
   try {
-    const interviews =
-      (await Interview.findOne({ userId: req.userId }).sort({
-        createdAt: -1,
-      })) / self;
-    exitCode("role experience mode finalScore status ceratedAt");
-    return res.status(200).json({
-      interviews,
-    });
+    const interviews = await Interview.find({ userId: req.userId })
+      .sort({ createdAt: -1 })
+      .select("role experience mode finalScore status createdAt");
+    return res.status(200).json(interviews);
   } catch (error) {
     return res.status(500).json({
-      message: `failed to get current use interviews ${error}`,
+      message: `failed to get current user interviews ${error}`,
     });
   }
 };
@@ -394,11 +390,13 @@ export const getInterviewReport = async (req, res) => {
     let totalConfidence = 0;
     let totalCommunication = 0;
     let totalCorrectness = 0;
+    let totalScore = 0;
 
     interview.questions.forEach((q) => {
       totalConfidence += q.confidence || 0;
       totalCommunication += q.communication || 0;
       totalCorrectness += q.correctness || 0;
+      totalScore += q.score || 0;
     });
     const finalScore = totalQuestion ? totalScore / totalQuestion : 0;
     const avgConfidence = totalQuestion ? totalConfidence / totalQuestion : 0;
@@ -415,8 +413,6 @@ export const getInterviewReport = async (req, res) => {
       correctness: Number(avgCorrectness.toFixed(1)),
       questionWiseScore: interview.questions,
     });
-
-    return res.status(200).json(interview);
   } catch (error) {
     console.error(error);
     return res
